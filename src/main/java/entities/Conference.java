@@ -10,6 +10,6 @@ import java.util.List;
 @Setter
 public class Conference {
     private String country;
-    private Date startingDate;
+    private String startingDate;
     private List<String> emails;
 }

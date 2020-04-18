@@ -11,6 +11,7 @@
 //import io.reactivex.schedulers.Schedulers;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -22,8 +23,12 @@ import com.google.gson.reflect.TypeToken;
 import entities.Conference;
 import entities.Person;
 
+import javax.swing.text.DateFormatter;
+
 
 public class App {
+
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     private static Date getNextDayOfDate(Date date) {
         Calendar c = Calendar.getInstance();
@@ -122,7 +127,7 @@ public class App {
                                             public Conference apply(Map.Entry<Date, List<Person>> dateListEntry) {
                                                 Conference conference = new Conference();
                                                 conference.setCountry(stringTreeMapEntry.getKey());
-                                                conference.setStartingDate(dateListEntry.getKey());
+                                                conference.setStartingDate(dateFormat.format(dateListEntry.getKey()));
                                                 List<String> emails = new ArrayList<>();
                                                 dateListEntry.getValue().forEach(new Consumer<Person>() {
                                                     @Override
@@ -148,7 +153,7 @@ public class App {
                 .collect(Collectors.toList());
 
         gson.toJson(conferences, new FileWriter("out.json"));
-        
+
     }
 
 

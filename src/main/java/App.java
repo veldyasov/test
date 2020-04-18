@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import entities.Conference;
 import entities.Person;
@@ -152,7 +153,17 @@ public class App {
                         .collect(Collectors.toList()).get(0))
                 .collect(Collectors.toList());
 
-        gson.toJson(conferences, new FileWriter("out.json"));
+        try (Writer writer = new FileWriter("out.json")) {
+            Gson gson2 = new GsonBuilder().create();
+            gson2.toJson(conferences, writer);
+        }
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //gson.toJson(conferences, new FileWriter("out.json"));
 
     }
 
